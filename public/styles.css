@@ -281,3 +281,6 @@ p{margin:0 0 1rem}
 }
 
 .coverage,.home-services,.longrows{position:relative}
+
+/* header call button contrast fix: keep the nav call pill white on crimson */
+.mainnav a.navpill,.mainnav a.navpill:hover{color:#fff;text-decoration:none}
