@@ -7,7 +7,7 @@ const IMAGES = {
   'cicero.jpg': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Cicero%2C_Illinois.jpg/1280px-Cicero%2C_Illinois.jpg',
   'ant-control.jpg': 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Pavement_ants_in_battle.jpg/1280px-Pavement_ants_in_battle.jpg',
   'cockroach-control.jpg': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Periplaneta_americana_-_American_cockroach_%2825859665686%29.jpg/1280px-Periplaneta_americana_-_American_cockroach_%2825859665686%29.jpg',
-  'rodent-control.jpg': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Rattus_norvegicus_%28Brown_Rat%29_%2848724520198%29.jpg/1280px-Rattus_norvegicus_%28Brown_Rat%29_%2848724520198%29.jpg',
+  'rodent-control.jpg': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Brown_rat_%28Rattus_norvegicus%29_Drenthe_2.jpg/1280px-Brown_rat_%28Rattus_norvegicus%29_Drenthe_2.jpg',
   'bed-bug-control.jpg': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Cimex_lectularius_%28bed_bug%29_%285975362751%29.jpg/1280px-Cimex_lectularius_%28bed_bug%29_%285975362751%29.jpg',
   'spider-control.jpg': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Tigrosa_aspersa_-_wolf_spider_%2830610561848%29.jpg/1280px-Tigrosa_aspersa_-_wolf_spider_%2830610561848%29.jpg',
   'wasp-control.jpg': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Australian_paper_wasp._%2811619542284%29.jpg/1280px-Australian_paper_wasp._%2811619542284%29.jpg',
