@@ -16,10 +16,12 @@ const IMAGES = {
   'commercial-pest-control.jpg': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Hawthorne_Works_tower_2012_1.JPG/1280px-Hawthorne_Works_tower_2012_1.JPG',
 };
 
-async function fetchOne(name, url, tries = 4) {
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+async function fetchOne(name, url, tries = 6) {
   for (let i = 1; i <= tries; i++) {
     try {
-      const r = await fetch(url, { headers: { 'User-Agent': UA } });
+      const r = await fetch(url, { headers: { 'User-Agent': UA, 'Accept': 'image/*,*/*' } });
       if (!r.ok) throw new Error('HTTP ' + r.status);
       const buf = Buffer.from(await r.arrayBuffer());
       if (buf.length < 1000) throw new Error('too small');
@@ -28,13 +30,25 @@ async function fetchOne(name, url, tries = 4) {
       return true;
     } catch (e) {
       console.warn('[images] retry', i, name, e.message);
-      await new Promise((res) => setTimeout(res, 800 * i));
+      await sleep(1000 * i + Math.floor(Math.random() * 500));
     }
   }
   console.warn('[images] FAILED', name);
   return false;
 }
 
-await mkdir('public/images', { recursive: true });
-const results = await Promise.all(Object.entries(IMAGES).map(([n, u]) => fetchOne(n, u)));
-console.log('[images] done', results.filter(Boolean).length + '/' + results.length);
+// Limited concurrency to avoid rate limiting from the build host.
+async function run() {
+  await mkdir('public/images', { recursive: true });
+  const entries = Object.entries(IMAGES);
+  const limit = 3;
+  let ok = 0;
+  for (let i = 0; i < entries.length; i += limit) {
+    const batch = entries.slice(i, i + limit);
+    const res = await Promise.all(batch.map(([n, u]) => fetchOne(n, u)));
+    ok += res.filter(Boolean).length;
+    if (i + limit < entries.length) await sleep(600);
+  }
+  console.log('[images] done', ok + '/' + entries.length);
+}
+await run();
