@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import site from '../data/site.js';
+import { areas, areaHub } from '../data/areas.js';
+import Icon from '../components/Icon.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { itemListNode, breadcrumbNode } from '../lib/schema.js';
+const trail = [{ name: 'Home', path: '/' }, { name: 'Service Areas', path: areaHub.path }];
+const nodes = [itemListNode(areas.map((a) => ({ name: a.name, path: a.path }))), breadcrumbNode(trail)];
+---
+<Base title={areaHub.title} description={areaHub.meta} canonical={areaHub.path} image="/images/cicero.jpg" nodes={nodes}>
+  <section class="subhead"><div class="shell">
+    <p class="eyebrow">Service areas</p>
+    <h1>{areaHub.h1}</h1>
+    <p>Based in Cicero and serving the near west suburbs and Little Village. Pick your town for local pest notes, or call {site.phone}. {site.hoursLine}</p>
+  </div></section>
+  <Breadcrumbs trail={trail} />
+  <section class="section"><div class="shell">
+    <div class="area-cards">
+      <div class="area-card area-home"><h2><Icon name="pin" /> Cicero</h2><p>Our home base. Brick bungalows and two-flats with alley rats, roaches in the two-flats, and fall boxelder bugs on the brick.</p></div>
+      {areas.map((a) => (
+        <a class="area-card" href={a.path}>
+          <h2><Icon name="pin" /> {a.name}</h2>
+          <p>{a.lede}</p>
+          <span class="gc-read">Local pest notes <Icon name="arrow" /></span>
+        </a>
+      ))}
+    </div>
+  </div></section>
+  <CtaBand />
+</Base>

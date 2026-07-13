@@ -1,0 +1,46 @@
+---
+import Base from '../../layouts/Base.astro';
+import site from '../../data/site.js';
+import { guides, getGuide } from '../../data/learn.js';
+import { getService } from '../../data/services.js';
+import Icon from '../../components/Icon.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ServiceGrid from '../../components/ServiceGrid.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { articleNode, breadcrumbNode } from '../../lib/schema.js';
+
+export function getStaticPaths() {
+  return guides.map((g) => ({ params: { slug: g.slug }, props: { g } }));
+}
+const { g } = Astro.props;
+const trail = [{ name: 'Home', path: '/' }, { name: 'Learn', path: '/learn/' }, { name: g.metaTitle, path: g.path }];
+const related = g.related.map((r) => getService(r));
+const nodes = [articleNode({ headline: g.h1, description: g.meta, url: `${site.url}${g.path}`, image: g.image, datePublished: g.date }), breadcrumbNode(trail)];
+---
+<Base title={g.title} description={g.meta} canonical={g.path} image={g.image} nodes={nodes}>
+  <div class="pagehead">
+    <div class="pagehead-img"><img src={g.image} alt={g.alt} width="1600" height="600" fetchpriority="high" /></div>
+    <div class="shell pagehead-copy"><p class="eyebrow">Learn</p><h1>{g.h1}</h1></div>
+  </div>
+  <Breadcrumbs trail={trail} />
+  <section class="section"><div class="shell">
+    <div class="layout2">
+      <div class="prose">
+        <p class="lede">{g.intro}</p>
+        {g.sections.map((sec) => (<><h2>{sec.h2}</h2>{sec.body.map((p) => <p set:html={p} />)}</>))}
+        <h2>References</h2>
+        <ul class="checks">{g.outbound.map((o) => <li><Icon name="check" /><a href={o.href} rel="nofollow noopener" target="_blank">{o.label}</a></li>)}</ul>
+        <p style="margin-top:1.5rem">Have this problem now? Call {site.phone} and describe it.</p>
+      </div>
+      <aside class="rail">
+        <div class="rail-card"><h3>Talk it through</h3><p>Describe the pest and the property. You get connected with an experienced local exterminator. {site.hoursShort}.</p><a class="pill pill-call" href={site.phoneHref}><Icon name="phone" /><span>{site.phone}</span></a></div>
+        <div class="rail-list"><h4>More guides</h4><ul>{guides.filter((x)=>x.slug!==g.slug).map((x) => <li><a href={x.path}>{x.metaTitle}</a></li>)}</ul></div>
+      </aside>
+    </div>
+  </div></section>
+  <section class="section band-gray"><div class="shell">
+    <div class="sec-head"><p class="eyebrow">Related services</p><h2>Get this one handled</h2></div>
+    <ServiceGrid items={related} />
+  </div></section>
+  <CtaBand />
+</Base>

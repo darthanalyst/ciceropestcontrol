@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import site from '../data/site.js';
+import { services } from '../data/services.js';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ServiceGrid from '../components/ServiceGrid.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { itemListNode, breadcrumbNode } from '../lib/schema.js';
+const trail = [{ name: 'Home', path: '/' }, { name: 'Services', path: '/pest-control-services/' }];
+const nodes = [itemListNode(services.map((s) => ({ name: s.short, path: s.path }))), breadcrumbNode(trail)];
+---
+<Base title="Pest Control Services in Cicero, IL | 708-391-3858" description="All pest control services in Cicero, IL: ants, cockroaches, rodents, bed bugs, spiders, wasps, boxelder bugs, mosquitoes and commercial. Call 708-391-3858." canonical="/pest-control-services/" nodes={nodes}>
+  <section class="subhead"><div class="shell">
+    <p class="eyebrow">Services</p>
+    <h1>Pest Control Services in Cicero, IL</h1>
+    <p>Pest control services in Cicero cover the pests these brick bungalows, two-flats, and commercial corridors actually produce. Each one connects you with an experienced local exterminator. {site.hoursLine}</p>
+  </div></section>
+  <Breadcrumbs trail={trail} />
+  <section class="section band-gray"><div class="shell">
+    <ServiceGrid items={services} />
+  </div></section>
+  <CtaBand />
+</Base>

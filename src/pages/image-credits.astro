@@ -1,0 +1,39 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { breadcrumbNode } from '../lib/schema.js';
+const trail = [{ name: 'Home', path: '/' }, { name: 'Image Credits', path: '/image-credits/' }];
+const nodes = [breadcrumbNode(trail)];
+const credits = [
+  { use: 'Homepage hero (brick two-flat)', title: 'Portage Park Two Flat', author: 'Orestek', license: 'Public domain', file: 'File:Portage Park Two Flat.jpg' },
+  { use: 'Area and Learn header (Cicero streetscape)', title: 'Cicero, Illinois', author: 'GR_Pei', license: 'Public domain', file: 'File:Cicero, Illinois.jpg' },
+  { use: 'Ant control', title: 'Pavement ants in battle', author: 'Paul Harrison', license: 'CC BY-SA 4.0', file: 'File:Pavement ants in battle.jpg' },
+  { use: 'Cockroach extermination', title: 'Periplaneta americana, American cockroach', author: 'Insects Unlocked', license: 'CC0', file: 'File:Periplaneta americana - American cockroach (25859665686).jpg' },
+  { use: 'Rodent control', title: 'Rattus norvegicus, Brown Rat', author: 'Auckland Museum', license: 'CC BY 2.0', file: 'File:Rattus norvegicus (Brown Rat) (48724520198).jpg' },
+  { use: 'Bed bug extermination', title: 'Cimex lectularius, bed bug', author: 'Gilles San Martin', license: 'CC BY-SA 2.0', file: 'File:Cimex lectularius (bed bug) (5975362751).jpg' },
+  { use: 'Spider control', title: 'Tigrosa aspersa, wolf spider', author: 'Andy Reago and Chrissy McClarren', license: 'CC BY 2.0', file: 'File:Tigrosa aspersa - wolf spider (30610561848).jpg' },
+  { use: 'Wasp and hornet removal', title: 'Australian paper wasp', author: 'Bernard Spragg. NZ', license: 'CC0', file: 'File:Australian paper wasp. (11619542284).jpg' },
+  { use: 'Boxelder bug and cluster fly control', title: 'Eastern boxelder bug', author: 'Rhododendrites', license: 'CC BY-SA 4.0', file: 'File:Eastern boxelder bug (41288).jpg' },
+  { use: 'Mosquito control', title: 'Aedes aegypti during blood meal', author: 'James Gathany', license: 'Public domain', file: 'File:Aedes aegypti during blood meal.jpg' },
+  { use: 'Commercial pest control (Hawthorne Works tower, Cicero)', title: 'Hawthorne Works tower 2012', author: 'MrHarman', license: 'CC BY-SA 3.0', file: 'File:Hawthorne Works tower 2012 1.JPG' },
+];
+const commons = (f) => 'https://commons.wikimedia.org/wiki/' + encodeURIComponent(f.replace(/ /g, '_'));
+---
+<Base title="Image Credits | Cicero Pest Control" description="Attribution for the photographs used on Cicero Pest Control, sourced from Wikimedia Commons under public-domain and Creative Commons terms." canonical="/image-credits/" nodes={nodes}>
+  <section class="subhead"><div class="shell">
+    <p class="eyebrow">Credits</p>
+    <h1>Image Credits</h1>
+    <p>Photographs on this site come from Wikimedia Commons under public-domain and Creative Commons terms. Attribution is listed below.</p>
+  </div></section>
+  <Breadcrumbs trail={trail} />
+  <section class="section"><div class="shell narrow prose">
+    <ul class="credits">
+      {credits.map((c) => (
+        <li>
+          <b>{c.use}:</b> <a href={commons(c.file)} rel="nofollow noopener" target="_blank">{c.title}</a> by {c.author}. License: {c.license}.
+        </li>
+      ))}
+    </ul>
+    <p>All photographs are used for illustration of common pests and local building types and do not depict any specific provider or property served through this referral service.</p>
+  </div></section>
+</Base>

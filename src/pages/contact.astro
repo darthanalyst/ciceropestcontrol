@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import site from '../data/site.js';
+import Icon from '../components/Icon.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { breadcrumbNode } from '../lib/schema.js';
+const trail = [{ name: 'Home', path: '/' }, { name: 'Contact', path: '/contact/' }];
+const nodes = [breadcrumbNode(trail)];
+---
+<Base title="Contact Cicero Pest Control | 708-391-3858" description="Contact Cicero Pest Control by phone. Call 708-391-3858 to reach an experienced local exterminator. Calls answered 7am to 9pm, seven days a week." canonical="/contact/" nodes={nodes}>
+  <section class="subhead"><div class="shell">
+    <p class="eyebrow">Contact</p>
+    <h1>Contact Cicero Pest Control</h1>
+    <p>The fastest way to get help is a phone call. There is no form to fill out.</p>
+  </div></section>
+  <Breadcrumbs trail={trail} />
+  <section class="section"><div class="shell narrow">
+    <div class="contact-card">
+      <h2>Call for pest control in Cicero</h2>
+      <p>Describe the pest and the property and you get connected with an experienced local exterminator.</p>
+      <a class="btn btn-primary btn-lg" href={site.phoneHref}><Icon name="phone" /><span>{site.phone}</span></a>
+    </div>
+    <div class="contact-facts">
+      <div class="fact"><b><Icon name="phone" /> Phone</b><p><a href={site.phoneHref}>{site.phone}</a></p></div>
+      <div class="fact"><b><Icon name="check" /> Hours</b><p>{site.hoursLine}</p></div>
+      <div class="fact"><b><Icon name="pin" /> Area served</b><p>{site.areaServed}</p></div>
+    </div>
+  </div></section>
+</Base>

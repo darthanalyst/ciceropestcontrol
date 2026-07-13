@@ -1,0 +1,38 @@
+---
+import site from '../data/site.js';
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+const nav = [
+  { label: 'Services', href: '/pest-control-services/' },
+  { label: 'Service Areas', href: '/service-areas/' },
+  { label: 'Learn', href: '/learn/' },
+  { label: 'About', href: '/about-us/' },
+  { label: 'Contact', href: '/contact/' },
+];
+---
+<div class="topbar">
+  <div class="shell topbar-in">
+    <span class="topbar-area"><Icon name="pin" /> Serving {site.areaServed}</span>
+    <span class="topbar-hours">{site.hoursLine}</span>
+  </div>
+</div>
+<header class="site-header">
+  <div class="shell header-in">
+    <Logo />
+    <button class="burger" aria-label="Open menu" aria-expanded="false" data-burger><Icon name="menu" /></button>
+    <nav class="mainnav" data-nav>
+      <ul>
+        {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+      </ul>
+      <a class="pill pill-call navpill" href={site.phoneHref}><Icon name="phone" /><span>Call {site.phone}</span></a>
+    </nav>
+  </div>
+</header>
+<script>
+  const b = document.querySelector('[data-burger]');
+  const n = document.querySelector('[data-nav]');
+  if (b && n) b.addEventListener('click', () => {
+    const open = n.classList.toggle('open');
+    b.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+</script>

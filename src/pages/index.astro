@@ -1,0 +1,102 @@
+---
+import Base from '../layouts/Base.astro';
+import site from '../data/site.js';
+import { services, getService } from '../data/services.js';
+import { areas } from '../data/areas.js';
+import Icon from '../components/Icon.astro';
+import ServiceGrid from '../components/ServiceGrid.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { itemListNode } from '../lib/schema.js';
+
+const title = 'Pest Control in Cicero, IL | 708-391-3858';
+const meta = 'Pest control in Cicero, IL for ants, roaches, rats, bed bugs and more. Connects you with an experienced local exterminator. Call 708-391-3858.';
+const rows = ['rodent-control-in-cicero', 'cockroach-extermination-in-cicero', 'boxelder-bug-and-cluster-fly-control-in-cicero', 'mosquito-control-in-cicero'].map(getService);
+const nodes = [itemListNode(services.map((s) => ({ name: s.short, path: s.path })))];
+---
+<Base title={title} description={meta} canonical="/" image="/images/hero.jpg" nodes={nodes}>
+  <section class="hero">
+    <div class="hero-grid">
+      <div class="hero-left">
+        <p class="hero-eyebrow"><Icon name="pin" /> Cicero, Illinois and nearby towns</p>
+        <h1>Pest Control in Cicero, IL</h1>
+        <p class="hero-lede">Pest control in Cicero is built for brick bungalows, two-flats, and alley networks. From rats and mice in the alleys to German cockroaches in the two-flats and boxelder bugs on the sunny brick, one call connects you with an experienced local exterminator who knows this part of Cook County.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href={site.phoneHref}><Icon name="phone" /><span>Call {site.phone}</span></a>
+          <a class="btn btn-outline" href="/pest-control-services/">See our services</a>
+        </div>
+        <p class="hero-note">{site.hoursLine}</p>
+      </div>
+      <div class="hero-right">
+        <img src="/images/hero.jpg" alt="A brick two-flat of the kind found across Cicero, Illinois" width="1280" height="960" fetchpriority="high" />
+      </div>
+    </div>
+  </section>
+
+  <section class="dual">
+    <div class="shell dual-grid">
+      <div class="dual-card">
+        <span class="dual-ic"><Icon name="callback" /></span>
+        <div>
+          <h2>Get a callback</h2>
+          <p>Leave a message with the pest and your address and an experienced local exterminator gets back to you.</p>
+          <a class="btn btn-light" href={site.phoneHref}><Icon name="phone" /><span>Call {site.phone}</span></a>
+        </div>
+      </div>
+      <div class="dual-card">
+        <span class="dual-ic"><Icon name="phone" /></span>
+        <div>
+          <h2>Talk to a local exterminator</h2>
+          <p>Describe what you are seeing and get straight answers about the pest and the next step. {site.hoursShort}.</p>
+          <a class="btn btn-light" href={site.phoneHref}><Icon name="phone" /><span>Call now</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band-gray home-services">
+    <div class="shell">
+      <div class="sec-head center">
+        <p class="eyebrow">What we handle</p>
+        <h2>Pest control services in Cicero</h2>
+        <p class="sec-sub">Nine focused services for the pests Cicero housing and businesses actually produce. Each connects you with an experienced local exterminator.</p>
+      </div>
+      <ServiceGrid items={services} />
+    </div>
+  </section>
+
+  <section class="section coverage">
+    <div class="shell">
+      <div class="sec-head center">
+        <p class="eyebrow">Where we help</p>
+        <h2>Cicero and the nearby towns</h2>
+        <p class="sec-sub">Serving Cicero plus the neighboring communities across the near west suburbs and Little Village.</p>
+      </div>
+      <div class="coverage-grid">
+        <span class="cov-item cov-home"><Icon name="pin" /> Cicero</span>
+        {areas.map((a) => <a class="cov-item" href={a.path}><Icon name="pin" /> {a.name}</a>)}
+      </div>
+      <p class="coverage-note"><a href="/service-areas/">See all service areas</a></p>
+    </div>
+  </section>
+
+  <section class="section longrows">
+    <div class="shell">
+      <div class="sec-head center">
+        <p class="eyebrow">Common in Cicero</p>
+        <h2>The problems we get called about most</h2>
+      </div>
+      {rows.map((s, i) => (
+        <div class={`longrow ${i % 2 === 1 ? 'longrow-alt' : ''}`}>
+          <div class="longrow-media"><img src={s.image} alt={s.alt} width="640" height="440" loading="lazy" /></div>
+          <div class="longrow-body">
+            <h3><a href={s.path}>{s.short} in Cicero</a></h3>
+            <p>{s.lede}</p>
+            <a class="btn-link" href={s.path}>Learn more about {s.short.toLowerCase()} in Cicero <Icon name="arrow" /></a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>

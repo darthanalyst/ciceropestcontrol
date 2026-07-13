@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import site from '../data/site.js';
+import Icon from '../components/Icon.astro';
+---
+<Base title="Page Not Found | Cicero Pest Control" description="That page could not be found. Call Cicero Pest Control at 708-391-3858 to reach an experienced local exterminator." canonical="/404/">
+  <section class="subhead"><div class="shell">
+    <p class="eyebrow">404</p>
+    <h1>Page not found</h1>
+    <p>The page you were looking for is not here. Try one of the links below, or call {site.phone}.</p>
+  </div></section>
+  <section class="section"><div class="shell narrow prose">
+    <a class="btn btn-primary btn-lg" href={site.phoneHref}><Icon name="phone" /><span>Call {site.phone}</span></a>
+    <ul class="checks" style="margin-top:2rem">
+      <li><Icon name="check" /><a href="/">Home</a></li>
+      <li><Icon name="check" /><a href="/pest-control-services/">Pest control services</a></li>
+      <li><Icon name="check" /><a href="/service-areas/">Service areas</a></li>
+      <li><Icon name="check" /><a href="/learn/">Learn</a></li>
+      <li><Icon name="check" /><a href="/contact/">Contact</a></li>
+    </ul>
+  </div></section>
+</Base>

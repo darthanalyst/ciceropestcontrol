@@ -1,0 +1,29 @@
+---
+import Base from '../../layouts/Base.astro';
+import site from '../../data/site.js';
+import { guides, learnHub } from '../../data/learn.js';
+import Icon from '../../components/Icon.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { itemListNode, breadcrumbNode } from '../../lib/schema.js';
+const trail = [{ name: 'Home', path: '/' }, { name: 'Learn', path: learnHub.path }];
+const nodes = [itemListNode(guides.map((g) => ({ name: g.metaTitle, path: g.path }))), breadcrumbNode(trail)];
+---
+<Base title={learnHub.title} description={learnHub.meta} canonical={learnHub.path} image="/images/cicero.jpg" nodes={nodes}>
+  <div class="pagehead">
+    <div class="pagehead-img"><img src="/images/cicero.jpg" alt="A Cicero, Illinois streetscape of brick homes" width="1600" height="600" fetchpriority="high" /></div>
+    <div class="shell pagehead-copy"><p class="eyebrow">Learn</p><h1>{learnHub.h1}</h1><p>Straight, local answers on the pests Cicero actually produces, from the alley rats and the German cockroaches in two-flats to the fall boxelder bugs on the brick and the bed bugs in apartments, and how to think about them before you call.</p></div>
+  </div>
+  <Breadcrumbs trail={trail} />
+  <section class="section"><div class="shell">
+    <div class="guide-cards">
+      {guides.map((g) => (
+        <a class="guide-card" href={g.path}>
+          <div class="guide-media"><img src={g.image} alt={g.alt} width="640" height="360" loading="lazy" /><span class="guide-tag">Pest Notes</span></div>
+          <div class="gc-body"><h3>{g.h1}</h3><p>{g.intro}</p><span class="gc-read">Read more <Icon name="arrow" /></span></div>
+        </a>
+      ))}
+    </div>
+  </div></section>
+  <CtaBand />
+</Base>

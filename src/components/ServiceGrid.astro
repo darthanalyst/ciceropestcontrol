@@ -1,0 +1,14 @@
+---
+import Icon from './Icon.astro';
+const { items } = Astro.props;
+---
+<div class="svc-grid">
+  {items.map((s) => (
+    <a class="svc-card" href={s.path}>
+      <span class="svc-icon"><Icon name={s.icon} /></span>
+      <h3>{s.short}</h3>
+      <p>{s.blurb}</p>
+      <span class="svc-link">View service <Icon name="arrow" /></span>
+    </a>
+  ))}
+</div>

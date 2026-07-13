@@ -1,0 +1,48 @@
+---
+import site from '../data/site.js';
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { services } from '../data/services.js';
+import { areas } from '../data/areas.js';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="footer-top">
+    <div class="shell footer-cols">
+      <div class="footer-brand">
+        <Logo />
+        <p>Cicero Pest Control connects Cicero-area residents and businesses with an experienced local exterminator for ants, cockroaches, rodents, bed bugs, spiders, wasps, boxelder bugs, mosquitoes and commercial work.</p>
+        <a class="pill pill-call" href={site.phoneHref}><Icon name="phone" /><span>{site.phone}</span></a>
+        <p class="footer-hours">{site.hoursLine}</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick links</h4>
+        <ul>
+          <li><a href="/pest-control-services/">Services</a></li>
+          <li><a href="/service-areas/">Service areas</a></li>
+          <li><a href="/learn/">Learn</a></li>
+          <li><a href="/about-us/">About</a></li>
+          <li><a href="/contact/">Contact</a></li>
+          <li><a href="/image-credits/">Image credits</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>{services.map((s) => <li><a href={s.path}>{s.short}</a></li>)}</ul>
+      </div>
+      <div class="footer-col">
+        <h4>Service areas</h4>
+        <ul>
+          <li><a href="/">Cicero</a></li>
+          {areas.map((a) => <li><a href={a.path}>{a.name}</a></li>)}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="shell footer-bottom-in">
+      <p class="disclaimer">{site.disclaimer}</p>
+      <p class="copyright">&copy; {year} {site.name}. Cicero, Illinois. <a href="/privacy-policy/">Privacy Policy</a> &middot; <a href="/terms-of-use/">Terms of Use</a></p>
+    </div>
+  </div>
+</footer>

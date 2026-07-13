@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import site from '../data/site.js';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { breadcrumbNode } from '../lib/schema.js';
+const trail = [{ name: 'Home', path: '/' }, { name: 'About', path: '/about-us/' }];
+const nodes = [breadcrumbNode(trail)];
+---
+<Base title="About Cicero Pest Control | 708-391-3858" description="Cicero Pest Control connects Cicero-area residents and businesses with an experienced local exterminator. Local focus, phone-only. Call 708-391-3858." canonical="/about-us/" nodes={nodes}>
+  <section class="subhead"><div class="shell">
+    <p class="eyebrow">About</p>
+    <h1>About Cicero Pest Control</h1>
+    <p>A local referral service focused on the pests Cicero and the near west suburbs actually produce.</p>
+  </div></section>
+  <Breadcrumbs trail={trail} />
+  <section class="section"><div class="shell narrow prose">
+    <p class="lede">Cicero Pest Control is a referral service. When you call, we connect you with an experienced local exterminator who handles the work. The site itself does not perform treatments; it exists to make the right local help one phone call away.</p>
+    <h2>Built around Cicero housing</h2>
+    <p>Cicero is a dense Cook County town of brick bungalows and two-flats, alley networks, older sewer lines, and busy commercial corridors along Cermak Road and Ogden Avenue. Those realities shape the pests here, from rats and mice in the alleys to German cockroaches and bed bugs in the multi-unit buildings and the boxelder bugs that gather on south-facing brick each fall. We keep our focus on that local picture rather than a generic script.</p>
+    <h2>Phone-first and simple</h2>
+    <p>There are no forms to fill out and no accounts to create. You call {site.phone}, describe the pest and the property, and get connected with an experienced local exterminator. {site.hoursLine}</p>
+    <h2>Where we help</h2>
+    <p>We serve {site.areaServed}. If you are on a Cicero block or in one of the neighboring towns and you are seeing pests, that is exactly what this service is for.</p>
+  </div></section>
+  <CtaBand />
+</Base>

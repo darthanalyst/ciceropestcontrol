@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import site from '../data/site.js';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { breadcrumbNode } from '../lib/schema.js';
+const trail = [{ name: 'Home', path: '/' }, { name: 'Terms of Use', path: '/terms-of-use/' }];
+const nodes = [breadcrumbNode(trail)];
+---
+<Base title="Terms of Use | Cicero Pest Control" description="The terms for using the Cicero Pest Control website, a referral service that connects callers with an experienced local exterminator." canonical="/terms-of-use/" nodes={nodes}>
+  <section class="subhead"><div class="shell">
+    <p class="eyebrow">Legal</p>
+    <h1>Terms of Use</h1>
+  </div></section>
+  <Breadcrumbs trail={trail} />
+  <section class="section"><div class="shell narrow prose">
+    <p class="lede">By using the Cicero Pest Control website you agree to these terms. The site is an informational referral service and does not itself provide pest control services.</p>
+    <h2>What this service is</h2>
+    <p>Cicero Pest Control connects you with an experienced local exterminator. When you call the number on the site, your call may be routed to a participating provider who performs any actual work. The site publishes general, local information to help you understand the pests common in the Cicero area before you call.</p>
+    <h2>Informational content</h2>
+    <p>The content here is provided for general information about common pests and is not a substitute for an on-site inspection. Pest situations vary, and the right response depends on your specific property and circumstances.</p>
+    <h2>Outside links</h2>
+    <p>References to public-health, extension, and government resources are provided for convenience. We do not control and are not responsible for the content of those external sites.</p>
+    <h2>Contact</h2>
+    <p>Questions about these terms can be raised by calling {site.phone}.</p>
+  </div></section>
+</Base>

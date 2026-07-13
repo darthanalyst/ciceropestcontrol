@@ -1,0 +1,51 @@
+---
+import Base from '../../layouts/Base.astro';
+import site from '../../data/site.js';
+import { areas, getArea } from '../../data/areas.js';
+import { services } from '../../data/services.js';
+import Icon from '../../components/Icon.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ServiceGrid from '../../components/ServiceGrid.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { serviceNode, breadcrumbNode } from '../../lib/schema.js';
+
+export function getStaticPaths() {
+  return areas.map((a) => ({ params: { slug: a.slug }, props: { a } }));
+}
+const { a } = Astro.props;
+const trail = [{ name: 'Home', path: '/' }, { name: 'Service Areas', path: '/service-areas/' }, { name: a.name, path: a.path }];
+const featured = services.slice(0, 6);
+const nodes = [serviceNode({ name: `Pest Control in ${a.name}`, serviceType: 'Pest control', description: a.meta, url: `${site.url}${a.path}`, areaName: a.name }), breadcrumbNode(trail)];
+---
+<Base title={a.title} description={a.meta} canonical={a.path} image="/images/cicero.jpg" nodes={nodes}>
+  <div class="pagehead">
+    <div class="pagehead-img"><img src="/images/cicero.jpg" alt={`The ${a.name} area near Cicero, Illinois`} width="1600" height="600" fetchpriority="high" /></div>
+    <div class="shell pagehead-copy"><p class="eyebrow"><Icon name="pin" /> {a.name}</p><h1>{a.h1}</h1><p>{a.lede}</p>
+      <a class="pill pill-call" href={site.phoneHref}><Icon name="phone" /><span>Call {site.phone}</span></a>
+    </div>
+  </div>
+  <Breadcrumbs trail={trail} />
+  <section class="section"><div class="shell">
+    <div class="layout2">
+      <div class="prose">
+        {a.intro.map((p) => <p set:html={p} />)}
+        <h2>The pest pressure here, block by block</h2>
+        <div class="zones">
+          {a.zones.map((z) => (<div class="zone"><b>{z.name}</b><p>{z.note}</p></div>))}
+        </div>
+        <h2>What we treat most in {a.name}</h2>
+        <ul class="checks">{a.pests.map((p) => <li><Icon name="check" /><span>{p.charAt(0).toUpperCase()+p.slice(1)}</span></li>)}</ul>
+        <p style="margin-top:1.5rem">Nearby: {a.landmarks.join(', ')}. Call {site.phone} and describe what you are seeing.</p>
+      </div>
+      <aside class="rail">
+        <div class="rail-card"><h3>Pest problem in {a.name}?</h3><p>Describe it and get an experienced local exterminator on it. {site.hoursShort}.</p><a class="pill pill-call" href={site.phoneHref}><Icon name="phone" /><span>{site.phone}</span></a></div>
+        <div class="rail-list"><h4>Services</h4><ul>{services.map((x) => <li><a href={x.path}>{x.short}</a></li>)}</ul></div>
+      </aside>
+    </div>
+  </div></section>
+  <section class="section band-gray"><div class="shell">
+    <div class="sec-head"><p class="eyebrow">Services</p><h2>Pest control across {a.name}</h2></div>
+    <ServiceGrid items={featured} />
+  </div></section>
+  <CtaBand heading={`Pest control in ${a.name}, on your terms`} />
+</Base>

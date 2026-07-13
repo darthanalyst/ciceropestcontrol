@@ -1,0 +1,14 @@
+---
+import site from '../data/site.js';
+import Icon from './Icon.astro';
+const { heading = 'Talk to a local Cicero exterminator today' } = Astro.props;
+---
+<section class="callband">
+  <div class="shell callband-in">
+    <div class="callband-text">
+      <h2>{heading}</h2>
+      <p>Describe the pest and the property and get connected with an experienced local exterminator. {site.hoursLine}</p>
+    </div>
+    <a class="callband-phone" href={site.phoneHref}><Icon name="phone" /><span>{site.phone}</span></a>
+  </div>
+</section>

@@ -1,0 +1,58 @@
+---
+import Base from '../layouts/Base.astro';
+import site from '../data/site.js';
+import { services, getService } from '../data/services.js';
+import { aliases } from '../lib/aliases.js';
+import { areas } from '../data/areas.js';
+import Icon from '../components/Icon.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import FaqList from '../components/FaqList.astro';
+import CtaBand from '../components/CtaBand.astro';
+import ServiceGrid from '../components/ServiceGrid.astro';
+import { serviceNode, breadcrumbNode, faqNode } from '../lib/schema.js';
+
+export function getStaticPaths() {
+  return services.map((s) => ({ params: { slug: s.slug }, props: { target: s.slug } }));
+}
+const { target } = Astro.props;
+const s = getService(target);
+const related = s.related.map((r) => getService(r));
+const trail = [{ name: 'Home', path: '/' }, { name: 'Services', path: '/pest-control-services/' }, { name: s.short, path: s.path }];
+const nodes = [serviceNode({ name: s.h1, serviceType: s.short, description: s.meta, url: `${site.url}${s.path}` }), breadcrumbNode(trail), faqNode(s.faqs)];
+---
+<Base title={s.title} description={s.meta} canonical={s.path} image={s.image} nodes={nodes}>
+  <div class="pagehead">
+    <div class="pagehead-img"><img src={s.image} alt={s.alt} width="1600" height="600" fetchpriority="high" /></div>
+    <div class="shell pagehead-copy"><p class="eyebrow">{s.kicker}</p><h1>{s.h1}</h1><p>{s.blurb}</p>
+      <a class="pill pill-call" href={site.phoneHref}><Icon name="phone" /><span>Call {site.phone}</span></a>
+    </div>
+  </div>
+  <Breadcrumbs trail={trail} />
+  <section class="section"><div class="shell">
+    <div class="layout2">
+      <div class="prose">
+        <p class="lede">{s.lede}</p>
+        {s.sections.map((sec) => (
+          <>
+            <h2>{sec.h2}</h2>
+            {sec.body && sec.body.map((p) => <p set:html={p} />)}
+            {sec.list && (<ul class="checks">{sec.list.map((li) => <li><Icon name="check" /><span>{li}</span></li>)}</ul>)}
+          </>
+        ))}
+        <p style="margin-top:1.5rem">Read more on <a href={s.guide.href}>{s.guide.label}</a>, or call {site.phone} and describe what you are seeing.</p>
+        <p><a href="/pest-control-services/">All pest control services in Cicero</a></p>
+      </div>
+      <aside class="rail">
+        <div class="rail-card"><h3>Talk it through</h3><p>Describe the pest, the property, and how long it has run. You get connected with an experienced local exterminator. {site.hoursShort}.</p><a class="pill pill-call" href={site.phoneHref}><Icon name="phone" /><span>{site.phone}</span></a></div>
+        <div class="rail-list"><h4>Other services</h4><ul>{services.filter((x) => x.slug !== s.slug).map((x) => <li><a href={x.path}>{x.short}</a></li>)}</ul></div>
+        <div class="rail-list"><h4>Where we help</h4><ul>{areas.slice(0,5).map((a) => <li><a href={a.path}>{a.name}</a></li>)}<li><a href="/service-areas/">All service areas</a></li></ul></div>
+      </aside>
+    </div>
+  </div></section>
+  <section class="section band-gray"><div class="shell">
+    <div class="sec-head"><p class="eyebrow">Related</p><h2>Other pests we handle in Cicero</h2></div>
+    <ServiceGrid items={related} />
+  </div></section>
+  <FaqList faqs={s.faqs} heading={`${s.short} in Cicero, answered`} />
+  <CtaBand />
+</Base>
